@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+textarea {
+  width: 80%;
+  resize: none;
+
+  background-color: #999999;
+
+  color: white;
+  font-size: 2rem;
+}
+
+.App {
+  height: 100vh;
+  background-color: #333333;
+}
+
+.answer-box {
+  height: 70%;
+  margin: 2% 10%;
+}
+
+.text-box {
+  height: 20%;
+  margin: 0% 10%;
+}
