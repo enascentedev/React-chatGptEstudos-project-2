@@ -42,9 +42,9 @@ function App() {
 					<option>JAVA</option>
 					<option>React</option>
 				</select>
-				<button className="btn" onClick={() => document.getElementById('my_modal_3').showModal()}>+</button>
-				<dialog id="my_modal_3" className="modal h-3/4">
-					<div className="modal-box h-96 flex flex-col">
+				<button className="btn" onClick={() => document.getElementById('my_modal_4').showModal()}>+</button>
+				<dialog id="my_modal_4" className="modal h-3/4">
+					<div className="modal-box h-72 flex flex-col">
 						<form method="dialog">
 							<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 						</form>
