@@ -9,7 +9,17 @@ function Materia() {
 				<h4 className="text-2xl my-2">Nome :</h4>
 				<input type="text" placeholder="digite o nome" className="input input-bordered w-64 max-w-xs" />
 				<button className="btn btn-outline w-28">Consultar</button>
-				<button className="btn btn-outline w-28">Nova</button>
+				<button className="btn btn-outline w-40" onClick={() => document.getElementById('my_modal_3').showModal()}>Nova matéria</button>
+				<dialog id="my_modal_3" className="modal">
+					<div className="modal-box">
+						<form method="dialog">
+							<h3>Adicone a matéria: </h3>
+							<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+							<input type="text" placeholder="digite a matéria" className="input input-bordered w-full my-2" />
+						
+						</form>
+					</div>
+				</dialog>
 			</div>
 			<table className="border-collapse border border-gray-400 w-full">
 				<thead>
