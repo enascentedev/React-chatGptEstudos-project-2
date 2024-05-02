@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 
 function Home() {
+	// hooks states 
 	const [materia, setMateria] = useState('');
 	const [materias, setMaterias] = useState([]);  // Estado separado para materias
 	const [assuntos, setAssuntos] = useState([]);
 	const [assuntoSelecionado, setAssuntoSelecionado] = useState(''); // Estado para assunto selecionado
 	const [resposta, setResposta] = useState(''); // Estado para armazenar a resposta obtida
 
+	//hook de carregamento materias
 	useEffect(() => {
 		const carregarMaterias = async () => {
 			try {
@@ -25,6 +27,7 @@ function Home() {
 		carregarMaterias();
 	}, []);
 
+	//hook de Carregamento de Assuntos Baseado na Matéria Selecionada
 	useEffect(() => {
 		if (materia) {
 			const carregarAssuntos = async () => {
@@ -44,6 +47,7 @@ function Home() {
 		}
 	}, [materia]);
 
+	// função que constroi a url de busca e faz o get para a API
 	const gerarResposta = async () => {
 		console.log("Assunto selecionado:", assuntoSelecionado);  // Log do assunto selecionado
 
