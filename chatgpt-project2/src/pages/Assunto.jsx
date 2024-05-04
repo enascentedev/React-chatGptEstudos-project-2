@@ -90,11 +90,11 @@ function Assunto() {
 	return (
 		<div className="bg-base-200 flex flex-col gap-10 p-10">
 			<Header />
-			<i class="fa-solid fa-user"></i>
+			<i class="fa-solid fa-magnifying-glass absolute top-44 mt-3 ml-1 left-12"></i>
 			<input
 				type="text"
 				placeholder="Digite para pesquisar"
-				className="input input-bordered w-full my-2"
+				className="input input-bordered w-full my-2 pl-10"
 				value={termoPesquisa}
 				onChange={handleSearchChange}
 			/>
@@ -149,7 +149,8 @@ function Assunto() {
 								<h4>{materias.find((m) => m.id === assunto.materia.id)?.nome}</h4>
 							</td>
 							<td className="text-center border border-gray-400 p-2">
-								<button className="btn btn-outline w-20 min-h-5 h-8" onClick={() => abrirModal(assunto)}>Editar</button>
+								<button className="btn btn-outline w-20 min-h-5 h-8 mx-2" onClick={() => abrirModal(assunto)}>Editar</button>
+								<i class="fa-solid fa-trash-can"></i>
 							</td>
 						</tr>
 					))}
