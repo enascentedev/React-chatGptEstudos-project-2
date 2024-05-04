@@ -6,6 +6,7 @@ function Materia() {
 	const [nomeMateria, setNomeMateria] = useState('');
 	const [modalVisible, setModalVisible] = useState(false);
 	const [materiaEmEdicao, setMateriaEmEdicao] = useState(null);
+	const [termoPesquisa, setTermoPesquisa] = useState('');
 
 	useEffect(() => {
 		const fetchMaterias = async () => {
@@ -43,15 +44,13 @@ function Materia() {
 
 		if (response.ok) {
 			const savedMateria = await response.json();
-			if (materiaEmEdicao) {
-				setMaterias((prevMaterias) =>
-					prevMaterias.map((materia) =>
+			setMaterias((prevMaterias) =>
+				prevMaterias.some((materia) => materia.id === savedMateria.id)
+					? prevMaterias.map((materia) =>
 						materia.id === savedMateria.id ? savedMateria : materia
 					)
-				);
-			} else {
-				setMaterias((prevMaterias) => [...prevMaterias, savedMateria]);
-			}
+					: [...prevMaterias, savedMateria]
+			);
 			setNomeMateria('');
 			setMateriaEmEdicao(null);
 			setModalVisible(false);
@@ -72,17 +71,31 @@ function Materia() {
 		setModalVisible(false);
 	};
 
+	const handleSearchChange = (e) => {
+		setTermoPesquisa(e.target.value.toLowerCase());
+	};
+
+	const materiasFiltradas = materias.filter(
+		(materia) => materia.nome.toLowerCase().includes(termoPesquisa)
+	);
+
 	return (
 		<div className="bg-base-200 flex flex-col gap-10 p-10">
-			<Header></Header>
-
+			<Header />
+			<input
+				type="text"
+				placeholder="Digite para pesquisar"
+				className="input input-bordered w-full my-2"
+				value={termoPesquisa}
+				onChange={handleSearchChange}
+			/>
 			<button className="btn btn-outline w-40" onClick={() => abrirModal(null)}>Nova matéria</button>
 
 			{modalVisible && (
 				<dialog open className="modal">
 					<div className="modal-box">
 						<h3>{materiaEmEdicao ? "Edite a matéria" : "Adicione a matéria"}: </h3>
-						<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={fecharModal}>✕</button>
+						<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={fecharModal}>✕</button>
 						<input
 							type="text"
 							placeholder="Digite a matéria"
@@ -104,7 +117,7 @@ function Materia() {
 					</tr>
 				</thead>
 				<tbody>
-					{materias.map((materia) => (
+					{materiasFiltradas.map((materia) => (
 						<tr key={materia.id} className="border-b border-gray-400">
 							<td className="text-center border border-gray-400">
 								<span>{materia.id}</span>

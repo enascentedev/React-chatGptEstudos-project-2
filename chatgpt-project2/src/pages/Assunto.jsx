@@ -8,6 +8,7 @@ function Assunto() {
 	const [materiaSelecionada, setMateriaSelecionada] = useState('');
 	const [modalVisible, setModalVisible] = useState(false);
 	const [assuntoEmEdicao, setAssuntoEmEdicao] = useState(null);
+	const [termoPesquisa, setTermoPesquisa] = useState('');
 
 	useEffect(() => {
 		const fetchMaterias = async () => {
@@ -76,9 +77,27 @@ function Assunto() {
 		setModalVisible(false);
 	};
 
+	const handleSearchChange = (e) => {
+		setTermoPesquisa(e.target.value.toLowerCase());
+	};
+
+	const assuntosFiltrados = assuntos.filter(
+		(assunto) =>
+			assunto.nome.toLowerCase().includes(termoPesquisa) ||
+			materias.find((materia) => materia.id === assunto.materia.id)?.nome.toLowerCase().includes(termoPesquisa)
+	);
+
 	return (
 		<div className="bg-base-200 flex flex-col gap-10 p-10">
 			<Header />
+			<i class="fa-solid fa-user"></i>
+			<input
+				type="text"
+				placeholder="Digite para pesquisar"
+				className="input input-bordered w-full my-2"
+				value={termoPesquisa}
+				onChange={handleSearchChange}
+			/>
 			<button className="btn btn-outline w-40" onClick={() => abrirModal(null)}>Novo assunto</button>
 
 			{modalVisible && (
@@ -113,12 +132,12 @@ function Assunto() {
 					<tr>
 						<th className="w-14 text-center border border-gray-400">Id</th>
 						<th className="px-10 text-start border border-gray-400">Nome</th>
-						<th className="px-10 text-start border border-gray-400">Matéria</th>
+						<th class="px-10 text-start border border-gray-400">Matéria</th>
 						<th className="w-40 border border-gray-400">Ação</th>
 					</tr>
 				</thead>
 				<tbody>
-					{assuntos.map((assunto) => (
+					{assuntosFiltrados.map((assunto) => (
 						<tr key={assunto.id} className="border-b border-gray-400">
 							<td className="text-center border border-gray-400">
 								<span>{assunto.id}</span>
@@ -127,7 +146,7 @@ function Assunto() {
 								<h4>{assunto.nome}</h4>
 							</td>
 							<td className="px-10 text-start border border-gray-400">
-								<h4>{materias.find(m => m.id === assunto.materia.id)?.nome}</h4>
+								<h4>{materias.find((m) => m.id === assunto.materia.id)?.nome}</h4>
 							</td>
 							<td className="text-center border border-gray-400 p-2">
 								<button className="btn btn-outline w-20 min-h-5 h-8" onClick={() => abrirModal(assunto)}>Editar</button>
