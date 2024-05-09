@@ -85,7 +85,7 @@ function Home() {
 
 
 	return (
-		<div className="bg-blue-800 flex flex-col gap-10 p-10">
+		<div className="h-screen  flex flex-col gap-10 p-10 bg-blue-800">
 			<Header />
 			<div className="flex justify-start items-center gap-2">
 				<select className="select select-bordered select-lg w-full max-w-xs"

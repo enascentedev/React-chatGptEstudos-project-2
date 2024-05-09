@@ -8,7 +8,7 @@ import "./assets/main.css";
 function App() {
   return (
     <Router>
-      <div className="bg-base-200 flex flex-col">
+      <div className="flex flex-col">
         <Routes>
 				<Route path="/" element={<Home />} />
         <Route path="/Materia" element={<Materia />} />
