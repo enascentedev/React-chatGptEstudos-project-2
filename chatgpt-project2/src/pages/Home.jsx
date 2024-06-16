@@ -8,8 +8,9 @@ function Home() {
 	const [assuntos, setAssuntos] = useState([]);
 	const [assuntoSelecionado, setAssuntoSelecionado] = useState(''); // Estado para assunto selecionado
 	const [resposta, setResposta] = useState(''); // Estado para armazenar a resposta obtida
+	const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
 
-	//hook de carregamento materias
+	// hook de carregamento materias
 	useEffect(() => {
 		const carregarMaterias = async () => {
 			try {
@@ -27,10 +28,10 @@ function Home() {
 		carregarMaterias();
 	}, []);
 
-	//hook de Carregamento de Assuntos Baseado na Matéria Selecionada
+	// hook de Carregamento de Assuntos Baseado na Matéria Selecionada
 	useEffect(() => {
-		if (materia) {
-			const carregarAssuntos = async () => {
+		const carregarAssuntos = async () => {
+			if (materia) {
 				try {
 					const response = await fetch(`http://localhost:8080/assuntos/${materia}`);
 					if (!response.ok) {
@@ -38,13 +39,14 @@ function Home() {
 					}
 					const data = await response.json();
 					setAssuntos(data);
+					setAssuntoSelecionado(''); // Resetar assunto selecionado ao mudar de matéria
 				} catch (error) {
 					console.error('Erro ao carregar assuntos:', error);
 				}
-			};
+			}
+		};
 
-			carregarAssuntos();
-		}
+		carregarAssuntos();
 	}, [materia]);
 
 	// função que constroi a url de busca e faz o get para a API
@@ -58,6 +60,8 @@ function Home() {
 
 		const url = `http://localhost:8080/chat/${assuntoSelecionado}`;
 		console.log("URL formada para a requisição:", url);  // Log da URL formada
+
+		setIsLoading(true); // Iniciar o estado de carregamento
 
 		try {
 			const response = await fetch(url, {
@@ -79,13 +83,13 @@ function Home() {
 			setResposta(result.conteudo); // Atualizar a resposta no estado
 		} catch (error) {
 			console.error('Erro na requisição:', error);
+		} finally {
+			setIsLoading(false); // Encerrar o estado de carregamento
 		}
 	};
 
-
-
 	return (
-		<div className="h-screen  flex flex-col gap-10 p-10 bg-blue-800">
+		<div className="h-screen flex flex-col gap-10 p-10 bg-blue-800">
 			<Header />
 			<div className="flex justify-start items-center gap-2">
 				<select className="select select-bordered select-lg w-full max-w-xs"
@@ -108,17 +112,23 @@ function Home() {
 						</option>
 					))}
 				</select>
-				<button className="btn" onClick={gerarResposta}>Gerar</button>
+				<button className="btn w-40 h-16 text-base" onClick={gerarResposta}>Gerar</button>
 			</div>
 			<div className="flex items-center gap-2 h-40 my-10">
-				
-				<textarea
-					className="input input-bordered h-40 w-full p-5"
-					value={resposta || "A resposta aparecerá aqui..."}
-					onChange={(e) => setResposta(e.target.value)}  // Atualiza o estado quando o usuário digita
-				/>
-
-
+				{isLoading ? (
+					<div className="flex items-center">
+						<span className="loading loading-ring loading-xs"></span>
+						<span className="loading loading-ring loading-sm"></span>
+						<span className="loading loading-ring loading-md"></span>
+						<span className="loading loading-ring loading-lg"></span>
+					</div>
+				) : (
+					<textarea
+						className="input input-bordered h-full w-full p-5"
+						value={resposta || "A resposta aparecerá aqui..."}
+						onChange={(e) => setResposta(e.target.value)}  // Atualiza o estado quando o usuário digita
+					/>
+				)}
 			</div>
 		</div>
 	);

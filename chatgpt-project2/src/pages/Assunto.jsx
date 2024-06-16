@@ -28,38 +28,45 @@ function Assunto() {
 	}, []);
 
 	const handleSaveAssunto = async (e) => {
-		e.preventDefault();
-		const assuntoId = assuntoEmEdicao ? assuntoEmEdicao.id : 0;
-		const url = `http://localhost:8080/assuntos/${assuntoId}`;
-		const method = assuntoEmEdicao ? 'PUT' : 'POST';
-		const body = JSON.stringify({
-			id: assuntoId,
-			nome: nomeAssunto,
-			materia: { id: parseInt(materiaSelecionada) }
-		});
+    e.preventDefault();
+    const assuntoId = assuntoEmEdicao ? assuntoEmEdicao.id : null;
+    const url = assuntoEmEdicao ? `http://localhost:8080/assuntos/${assuntoId}` : `http://localhost:8080/assuntos`;
+    const method = assuntoEmEdicao ? 'PUT' : 'POST';
+    const body = JSON.stringify({
+        id: assuntoId,
+        nome: nomeAssunto,
+        materia: { id: parseInt(materiaSelecionada) }
+    });
+		
+    try {
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body,
+        });
 
-		const response = await fetch(url, {
-			method,
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body,
-		});
-
-		if (response.ok) {
-			const savedAssunto = await response.json();
-			setAssuntos((prevAssuntos) =>
-				prevAssuntos.some((assunto) => assunto.id === savedAssunto.id)
-					? prevAssuntos.map((assunto) =>
-						assunto.id === savedAssunto.id ? savedAssunto : assunto
-					)
-					: [...prevAssuntos, savedAssunto]
-			);
-			resetModal();
-		} else {
-			alert("Falha ao salvar assunto. Tente novamente.");
-		}
-	};
+        if (response.ok) {
+            const savedAssunto = await response.json();
+            setAssuntos((prevAssuntos) =>
+                prevAssuntos.some((assunto) => assunto.id === savedAssunto.id)
+                    ? prevAssuntos.map((assunto) =>
+                        assunto.id === savedAssunto.id ? savedAssunto : assunto
+                    )
+                    : [...prevAssuntos, savedAssunto]
+            );
+            resetModal();
+        } else {
+            const errorText = await response.text();
+            console.error('Error:', errorText);
+            alert("Falha ao salvar assunto. Tente novamente.");
+        }
+    } catch (error) {
+        console.error('Network error:', error);
+        alert("Erro de rede. Verifique sua conexão.");
+    }
+};
 
 	const abrirModal = (assunto) => {
 		setNomeAssunto(assunto ? assunto.nome : '');
