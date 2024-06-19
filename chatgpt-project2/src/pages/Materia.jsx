@@ -10,7 +10,7 @@ function Materia() {
 
     useEffect(() => {
         const fetchMaterias = async () => {
-            const response = await fetch('http://localhost:8080/materias');
+            const response = await fetch('https://java-gpt2.onrender.com/materias');
             const data = await response.json();
             setMaterias(data);
         };
@@ -26,8 +26,8 @@ function Materia() {
         }
 
         const url = materiaEmEdicao
-            ? `http://localhost:8080/materias/${materiaEmEdicao.id}`
-            : 'http://localhost:8080/materias';
+            ? `https://java-gpt2.onrender.com/materias/${materiaEmEdicao.id}`
+            : 'https://java-gpt2.onrender.com/materias';
         const method = materiaEmEdicao ? 'PUT' : 'POST';
         const body = JSON.stringify({
             id: materiaEmEdicao ? materiaEmEdicao.id : 0,
@@ -60,7 +60,7 @@ function Materia() {
     };
 
     const handleDeleteMateria = async (id) => {
-        const url = `http://localhost:8080/materias/${id}`;
+        const url = `https://java-gpt2.onrender.com/materias/${id}`;
 
         try {
             const response = await fetch(url, {

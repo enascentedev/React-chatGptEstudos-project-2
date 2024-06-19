@@ -14,7 +14,7 @@ function Home() {
 	useEffect(() => {
 		const carregarMaterias = async () => {
 			try {
-				const response = await fetch(`http://localhost:8080/materias`);
+				const response = await fetch(`https://java-gpt2.onrender.com/materias`);
 				if (!response.ok) {
 					throw new Error('Falha ao carregar matérias');
 				}
@@ -33,7 +33,7 @@ function Home() {
 		const carregarAssuntos = async () => {
 			if (materia) {
 				try {
-					const response = await fetch(`http://localhost:8080/assuntos/${materia}`);
+					const response = await fetch(`https://java-gpt2.onrender.com/assuntos/${materia}`);
 					if (!response.ok) {
 						throw new Error('Falha ao carregar assuntos');
 					}
@@ -58,7 +58,7 @@ function Home() {
 			return;
 		}
 
-		const url = `http://localhost:8080/chat/${assuntoSelecionado}`;
+		const url = `https://java-gpt2.onrender.com/chat/${assuntoSelecionado}`;
 		console.log("URL formada para a requisição:", url);  // Log da URL formada
 
 		setIsLoading(true); // Iniciar o estado de carregamento

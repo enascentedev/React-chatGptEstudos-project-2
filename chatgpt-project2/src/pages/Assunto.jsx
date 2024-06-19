@@ -12,13 +12,13 @@ function Assunto() {
 
     useEffect(() => {
         const fetchMaterias = async () => {
-            const response = await fetch('http://localhost:8080/materias');
+            const response = await fetch('https://java-gpt2.onrender.com/materias');
             const data = await response.json();
             setMaterias(data);
         };
 
         const fetchAssuntos = async () => {
-            const response = await fetch('http://localhost:8080/assuntos');
+            const response = await fetch('https://java-gpt2.onrender.com/assuntos');
             const data = await response.json();
             setAssuntos(data);
         };
@@ -30,7 +30,7 @@ function Assunto() {
     const handleSaveAssunto = async (e) => {
         e.preventDefault();
         const assuntoId = assuntoEmEdicao ? assuntoEmEdicao.id : null;
-        const url = assuntoEmEdicao ? `http://localhost:8080/assuntos/${assuntoId}` : `http://localhost:8080/assuntos`;
+        const url = assuntoEmEdicao ? `https://java-gpt2.onrender.com/assuntos/${assuntoId}` : `https://java-gpt2.onrender.com/assuntos`;
         const method = assuntoEmEdicao ? 'PUT' : 'POST';
         const body = JSON.stringify({
             id: assuntoId,
@@ -69,7 +69,7 @@ function Assunto() {
     };
 
     const handleDeleteAssunto = async (id) => {
-        const url = `http://localhost:8080/assuntos/${id}`;
+        const url = `https://java-gpt2.onrender.com/assuntos/${id}`;
 
         try {
             const response = await fetch(url, {
