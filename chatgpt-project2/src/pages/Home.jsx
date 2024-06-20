@@ -89,10 +89,10 @@ function Home() {
 	};
 
 	return (
-		<div className="h-screen flex flex-col gap-10 p-10 bg-blue-800">
+		<div className="h-screen flex flex-col gap-10 p-10 bg-cover bg-center" style={{ backgroundImage: "url('/fundo.jpg')" }}>
 			<Header />
 			<div className="flex justify-start items-center gap-2">
-				<select className="select select-bordered select-lg w-full max-w-xs"
+				<select className="select select-bordered select-lg w-full max-w-xs bg-black text-white border-white"
 					value={materia}
 					onChange={(e) => setMateria(e.target.value)}>
 					<option disabled value="">Selecione uma matéria</option>
@@ -102,7 +102,7 @@ function Home() {
 				</select>
 			</div>
 			<div className="flex justify-start items-center gap-2">
-				<select className="select select-bordered select-lg w-full max-w-xs"
+				<select className="select select-bordered select-lg w-full max-w-xs bg-black text-white border-white"
 					value={assuntoSelecionado}
 					onChange={(e) => setAssuntoSelecionado(e.target.value)}>
 					<option disabled value="">Selecione um assunto</option>
@@ -112,9 +112,9 @@ function Home() {
 						</option>
 					))}
 				</select>
-				<button className="btn w-40 h-16 text-base" onClick={gerarResposta}>Gerar</button>
+				<button className="btn w-40 h-16 text-base bg-black text-white" onClick={gerarResposta}>Gerar</button>
 			</div>
-			<div className="flex items-center gap-2 h-40 my-10">
+			<div className="flex items-center gap-2 h-full mt-36">
 				{isLoading ? (
 					<div className="flex items-center">
 						<span className="loading loading-ring loading-xs"></span>
@@ -124,7 +124,7 @@ function Home() {
 					</div>
 				) : (
 					<textarea
-						className="input input-bordered h-full w-full p-5"
+						className="input input-bordered h-full w-full p-5 bg-black text-white border-spacing-2 border-white"
 						value={resposta || "A resposta aparecerá aqui..."}
 						onChange={(e) => setResposta(e.target.value)}  // Atualiza o estado quando o usuário digita
 					/>

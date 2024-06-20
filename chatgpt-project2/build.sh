@@ -4,7 +4,7 @@
 pwd
 
 # clear
-rm -rfv dist
+rm -rfv build
 
 # build
 npm run build
