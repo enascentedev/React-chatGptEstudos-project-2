@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-
 function Assunto() {
 	const [materias, setMaterias] = useState([]);
 	const [assuntos, setAssuntos] = useState([]);
@@ -9,18 +8,34 @@ function Assunto() {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [assuntoEmEdicao, setAssuntoEmEdicao] = useState(null);
 	const [termoPesquisa, setTermoPesquisa] = useState('');
+	const [isLoadingMaterias, setIsLoadingMaterias] = useState(false);
+	const [isLoadingAssuntos, setIsLoadingAssuntos] = useState(false);
 
 	useEffect(() => {
 		const fetchMaterias = async () => {
-			const response = await fetch('https://java-gpt2.onrender.com/materias');
-			const data = await response.json();
-			setMaterias(data);
+			setIsLoadingMaterias(true);
+			try {
+				const response = await fetch('https://java-gpt2.onrender.com/materias');
+				const data = await response.json();
+				setMaterias(data);
+			} catch (error) {
+				console.error('Erro ao carregar matérias:', error);
+			} finally {
+				setIsLoadingMaterias(false);
+			}
 		};
 
 		const fetchAssuntos = async () => {
-			const response = await fetch('https://java-gpt2.onrender.com/assuntos');
-			const data = await response.json();
-			setAssuntos(data);
+			setIsLoadingAssuntos(true);
+			try {
+				const response = await fetch('https://java-gpt2.onrender.com/assuntos');
+				const data = await response.json();
+				setAssuntos(data);
+			} catch (error) {
+				console.error('Erro ao carregar assuntos:', error);
+			} finally {
+				setIsLoadingAssuntos(false);
+			}
 		};
 
 		fetchMaterias();
@@ -116,7 +131,7 @@ function Assunto() {
 	);
 
 	return (
-		<div className="h-screen  flex flex-col gap-8 p-10 bg-cover bg-center" >
+		<div className="h-screen flex flex-col gap-8 p-10 bg-cover bg-center">
 			<div className='flex justify-between gap-2'>
 				<input
 					type="text"
@@ -155,35 +170,41 @@ function Assunto() {
 				</dialog>
 			)}
 
-			<table className="border-collapse border border-gray-400 w-full bg-black text-white">
-				<thead>
-					<tr>
-						<th className="w-14 text-center border border-gray-400">Id</th>
-						<th className="px-10 text-start border border-gray-400">Nome</th>
-						<th className="px-10 text-start border border-gray-400">Matéria</th>
-						<th className="w-40 border border-gray-400">Ação</th>
-					</tr>
-				</thead>
-				<tbody>
-					{assuntosFiltrados.map((assunto) => (
-						<tr key={assunto.id} className="border-b border-gray-400">
-							<td className="text-center border border-gray-400">
-								<span>{assunto.id}</span>
-							</td>
-							<td className="px-10 text-start border border-gray-400">
-								<h4>{assunto.nome}</h4>
-							</td>
-							<td className="px-10 text-start border border-gray-400">
-								<h4>{materias.find((m) => m.id === assunto.materia.id)?.nome}</h4>
-							</td>
-							<td className="text-center border border-gray-400 p-2">
-								<button className="btn btn-outline w-20 min-h-5 h-8 mx-2" onClick={() => abrirModal(assunto)}>Editar</button>
-								<i className="fa-solid fa-trash-can cursor-pointer" onClick={() => handleDeleteAssunto(assunto.id)}></i>
-							</td>
+			{isLoadingAssuntos ? (
+				<div className="w-full h-full flex justify-center items-center" style={{ backgroundImage: "url('/loading.jpg')" }}>
+					<p className="text-white">Carregando assuntos...</p>
+				</div>
+			) : (
+				<table className="border-collapse border border-gray-400 w-full bg-black text-white">
+					<thead>
+						<tr className='h-16'>
+							<th className="w-14 text-center border border-gray-400">Id</th>
+							<th className="px-10 text-start border border-gray-400">Nome</th>
+							<th className="px-10 text-start border border-gray-400">Matéria</th>
+							<th className="w-40 border border-gray-400">Ação</th>
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{assuntosFiltrados.map((assunto) => (
+							<tr key={assunto.id} className="border-b border-gray-400">
+								<td className="text-center border border-gray-400">
+									<span>{assunto.id}</span>
+								</td>
+								<td className="px-10 text-start border border-gray-400">
+									<h4>{assunto.nome}</h4>
+								</td>
+								<td className="px-10 text-start border border-gray-400">
+									<h4>{materias.find((m) => m.id === assunto.materia.id)?.nome}</h4>
+								</td>
+								<td className="text-center border border-gray-400 p-2">
+									<button className="btn btn-outline w-20 min-h-5 h-8 mx-2" onClick={() => abrirModal(assunto)}>Editar</button>
+									<i className="fa-solid fa-trash-can cursor-pointer" onClick={() => handleDeleteAssunto(assunto.id)}></i>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			)}
 		</div>
 	);
 }
