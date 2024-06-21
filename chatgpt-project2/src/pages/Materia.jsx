@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../components/Header';
 
 function Materia() {
 	const [materias, setMaterias] = useState([]);
@@ -101,17 +100,16 @@ function Materia() {
 	);
 
 	return (
-		<div className="h-screen flex flex-col gap-10 p-10 bg-cover bg-center" style={{ backgroundImage: "url('/fundo.jpg')" }}>
-			<Header />
-			<div className='flex justify-between h-10 mb-10 gap-2'>
+		<div className="h-screen flex flex-col gap-8 p-10 bg-cover bg-center">
+			<div className='flex justify-between gap-2'>
 				<input
 					type="text"
 					placeholder="Digite para pesquisar"
-					className="bg-black text-white input input-bordered w-full  "
+					className="bg-black text-white input input-bordered w-full h-20"
 					value={termoPesquisa}
 					onChange={handleSearchChange}
 				/>
-				<button className="btn btn-outline w-40 bg-black text-white" onClick={() => abrirModal(null)}>Nova matéria</button>
+				<button className="btn btn-outline w-40 h-20 bg-black text-white" onClick={() => abrirModal(null)}>Nova matéria</button>
 			</div>
 
 			{modalVisible && (
@@ -131,9 +129,9 @@ function Materia() {
 				</dialog>
 			)}
 
-			<table className="border-collapse border bg-black text-white border-gray-400 w-full">
+			<table className="border-collapse border bg-black text-white border-gray-400 w-full h-80 overflow-y-auto">
 				<thead>
-					<tr>
+					<tr className='h-16'>
 						<th className="w-14 text-center border border-gray-400">Id</th>
 						<th className="px-10 text-start border border-gray-400">Nome</th>
 						<th className="w-40 border border-gray-400">Ação</th>
@@ -141,15 +139,15 @@ function Materia() {
 				</thead>
 				<tbody>
 					{materiasFiltradas.map((materia) => (
-						<tr key={materia.id} className="border-b border-gray-400">
+						<tr key={materia.id} className="border-b border-gray-400 ">
 							<td className="text-center border border-gray-400">
 								<span>{materia.id}</span>
 							</td>
 							<td className="px-10 text-start border border-gray-400">
 								<h4>{materia.nome}</h4>
 							</td>
-							<td className="text-center border border-gray-400 p-2">
-								<button className="btn btn-outline w-20 mx-2" onClick={() => abrirModal(materia)}>Editar</button>
+							<td className="text-center border border-gray-400 p-2 ">
+								<button className="btn btn-outline w-20 mx-2 text-white" onClick={() => abrirModal(materia)}>Editar</button>
 								<i className="fa-solid fa-trash-can cursor-pointer" onClick={() => handleDeleteMateria(materia.id)}></i>
 							</td>
 						</tr>

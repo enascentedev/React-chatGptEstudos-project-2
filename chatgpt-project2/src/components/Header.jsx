@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 function Header() {
 	return (
-		<div className="h-52 flex justify-between items-center bg-black text-white border-2 border-white px-2 rounded-md text-xl">
+		<div className="h-20 m-10 flex justify-between items-center bg-black text-white border-2 border-white px-2 rounded-md text-xl">
 			<div className="w-full flex flex-1 gap-2 items-center p-2">
 				<i className="fa-solid fa-robot text-xl"></i>
 				<h2>GERADOR DE PERGUNTAS E RESPOSTAS</h2>
@@ -15,7 +15,7 @@ function Header() {
 							className={({ isActive }) =>
 								isActive
 									? 'flex items-center bg-gray-800 px-3 py-[22px] '
-									: 'flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors'
+									: 'flex items-center px-3 py-[22px] rounded-md hover:bg-gray-700 transition-colors'
 							}
 						>
 							<i className="fa-solid fa-house"></i>

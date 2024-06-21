@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../components/Header';
+
 
 function Home() {
 	// hooks states 
@@ -89,8 +89,8 @@ function Home() {
 	};
 
 	return (
-		<div className="h-screen flex flex-col gap-10 p-10 bg-cover bg-center" style={{ backgroundImage: "url('/fundo.jpg')" }}>
-			<Header />
+		<div className="h-screen overflow-y-auto flex flex-col gap-10 p-10 bg-cover bg-center" >
+		
 			<div className="flex justify-start items-center gap-2">
 				<select className="select select-bordered select-lg w-full max-w-xs bg-black text-white border-white"
 					value={materia}
