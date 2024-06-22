@@ -117,7 +117,7 @@ function Materia() {
 					value={termoPesquisa}
 					onChange={handleSearchChange}
 				/>
-				<button className="btn btn-outline w-40 h-20 bg-black text-white" onClick={() => abrirModal(null)}>Nova matéria</button>
+				<button className="btn btn-outline w-32 h-20 bg-black text-white" onClick={() => abrirModal(null)}>Nova matéria</button>
 			</div>
 
 			{modalVisible && (

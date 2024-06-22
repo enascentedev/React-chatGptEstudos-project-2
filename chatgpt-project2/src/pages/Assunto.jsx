@@ -138,7 +138,7 @@ function Assunto() {
 					value={termoPesquisa}
 					onChange={handleSearchChange}
 				/>
-				<button className="btn btn-outline w-40 h-20 bg-black text-white" onClick={() => abrirModal(null)}>Novo assunto</button>
+				<button className="btn btn-outline w-20 h-20 bg-black text-white" onClick={() => abrirModal(null)}>Novo assunto</button>
 			</div>
 
 			{modalVisible && (
