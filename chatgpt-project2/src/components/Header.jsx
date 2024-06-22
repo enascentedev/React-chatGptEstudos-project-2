@@ -13,7 +13,7 @@ function Header() {
 			<div className="h-20 mx-10 mt-10 flex justify-between items-center bg-black text-white border-2 border-white px-2 rounded-md text-xl">
 				<div className="w-full flex flex-1 gap-2 items-center p-2">
 					<i className="fa-solid fa-robot text-xl"></i>
-					<h2 className='md:text-xs text-sm'>GERADOR DE PERGUNTAS E RESPOSTAS</h2>
+					<h2 className='text-sm md:text-xl'>GERADOR DE PERGUNTAS E RESPOSTAS</h2>
 				</div>
 				<nav className="flex justify-between gap-5">
 					<ul className="md:flex justify-between gap-5 hidden">
