@@ -10,7 +10,7 @@ function Header() {
 
 	return (
 		<div>
-			<div className="h-20 m-10 flex justify-between items-center bg-black text-white border-2 border-white px-2 rounded-md text-xl">
+			<div className="h-20 mx-10 mt-10 flex justify-between items-center bg-black text-white border-2 border-white px-2 rounded-md text-xl">
 				<div className="w-full flex flex-1 gap-2 items-center p-2">
 					<i className="fa-solid fa-robot text-xl"></i>
 					<h2 className='md:text-xs text-sm'>GERADOR DE PERGUNTAS E RESPOSTAS</h2>
@@ -72,7 +72,7 @@ function Header() {
 				</nav>
 			</div>
 			{isMobileMenuOpen && (
-				<nav className="bg-black text-white m-10 p-4 rounded-md md:hidden">
+				<nav className="bg-black text-white mx-10 p-4 rounded-md md:hidden">
 					<ul className="flex flex-col justify-start">
 						<li>
 							<NavLink

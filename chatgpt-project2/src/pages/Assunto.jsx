@@ -129,7 +129,7 @@ function Assunto() {
 	);
 
 	return (
-		<div className="h-screen flex flex-col gap-8 p-10 bg-cover bg-center">
+		<div className="h-screen flex flex-col gap-8 md:p-10 p-5 bg-cover bg-center">
 			<div className='flex justify-between gap-2'>
 				<input
 					type="text"
@@ -177,26 +177,26 @@ function Assunto() {
 				<table className="border-collapse border border-gray-400 w-full bg-black text-white">
 					<thead>
 						<tr className='h-16'>
-							<th className="md:w-10 w-40   text-center border border-gray-400">Id</th>
-							<th className="px-10 text-start border border-gray-400">Nome</th>
-							<th className="px-10 text-start border border-gray-400">Matéria</th>
-							<th className="md:w-10 w-40  border border-gray-400">Ação</th>
+							<th className="w-14 md:px-10 px-2 text-center border border-gray-400">Id</th>
+							<th className="md:w-40 w-20 md:px-10 px-2 text-start border border-gray-400">Nome</th>
+							<th className="md:w-40 w-20 md:px-10 px-2 text-start border border-gray-400">Matéria</th>
+							<th className="w-10 border border-gray-400">Ação</th>
 						</tr>
 					</thead>
 					<tbody>
 						{assuntosFiltrados.map((assunto) => (
 							<tr key={assunto.id} className="border-b border-gray-400">
-								<td className="text-center border border-gray-400">
+								<td className="md:px-10 px-4 text-center border border-gray-400">
 									<span>{assunto.id}</span>
 								</td>
-								<td className="px-10 text-start border border-gray-400">
+								<td className="md:px-10 px-4 text-start border border-gray-400">
 									<h4>{assunto.nome}</h4>
 								</td>
-								<td className="px-10 text-start border border-gray-400">
+								<td className="md:px-10 px-4 text-start border border-gray-400">
 									<h4>{materias.find((m) => m.id === assunto.materia.id)?.nome}</h4>
 								</td>
-								<td className="text-center border border-gray-400 p-2">
-									<button className="btn btn-outline w-20 min-h-5 h-8 mx-2" onClick={() => abrirModal(assunto)}>Editar</button>
+								<td className="text-center border  border-gray-400 md:px-50 px-0">
+									<button className="text-white btn btn-outline w-20 min-h-5 h-8 mx-2" onClick={() => abrirModal(assunto)}>Editar</button>
 									<i className="fa-solid fa-trash-can cursor-pointer" onClick={() => handleDeleteAssunto(assunto.id)}></i>
 								</td>
 							</tr>
