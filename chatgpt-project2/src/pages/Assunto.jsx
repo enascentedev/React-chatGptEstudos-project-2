@@ -8,21 +8,19 @@ function Assunto() {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [assuntoEmEdicao, setAssuntoEmEdicao] = useState(null);
 	const [termoPesquisa, setTermoPesquisa] = useState('');
-	const [isLoadingMaterias, setIsLoadingMaterias] = useState(false);
+	
 	const [isLoadingAssuntos, setIsLoadingAssuntos] = useState(false);
 
 	useEffect(() => {
 		const fetchMaterias = async () => {
-			setIsLoadingMaterias(true);
+			
 			try {
 				const response = await fetch('https://java-gpt2.onrender.com/materias');
 				const data = await response.json();
 				setMaterias(data);
 			} catch (error) {
 				console.error('Erro ao carregar matérias:', error);
-			} finally {
-				setIsLoadingMaterias(false);
-			}
+			} 
 		};
 
 		const fetchAssuntos = async () => {
