@@ -6,12 +6,20 @@ function Materia() {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [materiaEmEdicao, setMateriaEmEdicao] = useState(null);
 	const [termoPesquisa, setTermoPesquisa] = useState('');
+	const [isLoadingMaterias, setIsLoadingMaterias] = useState(false);
 
 	useEffect(() => {
 		const fetchMaterias = async () => {
-			const response = await fetch('https://java-gpt2.onrender.com/materias');
-			const data = await response.json();
-			setMaterias(data);
+			setIsLoadingMaterias(true);
+			try {
+				const response = await fetch('https://java-gpt2.onrender.com/materias');
+				const data = await response.json();
+				setMaterias(data);
+			} catch (error) {
+				console.error('Erro ao carregar matérias:', error);
+			} finally {
+				setIsLoadingMaterias(false);
+			}
 		};
 
 		fetchMaterias();
@@ -129,31 +137,37 @@ function Materia() {
 				</dialog>
 			)}
 
-			<table className="border-collapse border bg-black text-white border-gray-400 w-full h-80 overflow-y-auto">
-				<thead>
-					<tr className='h-16'>
-						<th className="w-14 text-center border border-gray-400">Id</th>
-						<th className="px-10 text-start border border-gray-400">Nome</th>
-						<th className="w-40 border border-gray-400">Ação</th>
-					</tr>
-				</thead>
-				<tbody>
-					{materiasFiltradas.map((materia) => (
-						<tr key={materia.id} className="border-b border-gray-400 ">
-							<td className="text-center border border-gray-400">
-								<span>{materia.id}</span>
-							</td>
-							<td className="px-10 text-start border border-gray-400">
-								<h4>{materia.nome}</h4>
-							</td>
-							<td className="text-center border border-gray-400 p-2 ">
-								<button className="btn btn-outline w-20 mx-2 text-white" onClick={() => abrirModal(materia)}>Editar</button>
-								<i className="fa-solid fa-trash-can cursor-pointer" onClick={() => handleDeleteMateria(materia.id)}></i>
-							</td>
+			{isLoadingMaterias ? (
+				<div className="w-full h-full flex flex-col gap-5 justify-center items-center bg-center bg-cover" style={{ backgroundImage: "url('/loading.jpg')" }}>
+					<p className="text-white text-xl text font-bold bg-black p-2">Carregando matérias...</p>
+				</div>
+			) : (
+				<table className="border-collapse border bg-black text-white border-gray-400 w-full h-80 overflow-y-auto">
+					<thead>
+						<tr className='h-16'>
+							<th className="w-14 text-center border border-gray-400">Id</th>
+							<th className="px-10 text-start border border-gray-400">Nome</th>
+							<th className="w-40 border border-gray-400">Ação</th>
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{materiasFiltradas.map((materia) => (
+							<tr key={materia.id} className="border-b border-gray-400 ">
+								<td className="text-center border border-gray-400">
+									<span>{materia.id}</span>
+								</td>
+								<td className="px-10 text-start border border-gray-400">
+									<h4>{materia.nome}</h4>
+								</td>
+								<td className="text-center border border-gray-400 p-2 ">
+									<button className="btn btn-outline w-20 mx-2 text-white" onClick={() => abrirModal(materia)}>Editar</button>
+									<i className="fa-solid fa-trash-can cursor-pointer" onClick={() => handleDeleteMateria(materia.id)}></i>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			)}
 		</div>
 	);
 }

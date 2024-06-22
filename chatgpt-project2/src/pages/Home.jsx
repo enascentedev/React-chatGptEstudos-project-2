@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 function Home() {
   // hooks states 
   const [materia, setMateria] = useState('');
-  const [materias, setMaterias] = useState([]);  // Estado separado para materias
+  const [materias, setMaterias] = useState([]);  
   const [assuntos, setAssuntos] = useState([]);
-  const [assuntoSelecionado, setAssuntoSelecionado] = useState(''); // Estado para assunto selecionado
-  const [resposta, setResposta] = useState(''); // Estado para armazenar a resposta obtida
-  const [isLoadingMaterias, setIsLoadingMaterias] = useState(false); // Estado de carregamento de materias
-  const [isLoadingAssuntos, setIsLoadingAssuntos] = useState(false); // Estado de carregamento de assuntos
-  const [isLoadingResposta, setIsLoadingResposta] = useState(false); // Estado de carregamento da resposta
+  const [assuntoSelecionado, setAssuntoSelecionado] = useState(''); 
+  const [resposta, setResposta] = useState(''); 
+  const [isLoadingMaterias, setIsLoadingMaterias] = useState(false);
+  const [isLoadingAssuntos, setIsLoadingAssuntos] = useState(false); 
+  const [isLoadingResposta, setIsLoadingResposta] = useState(false); 
 
   // hook de carregamento materias
   useEffect(() => {
@@ -151,7 +151,7 @@ function Home() {
           Gerar
         </button>
       </div>
-      <div className="flex items-center gap-2 h-full mt-36">
+      <div className="flex items-center gap-2 h-full ">
         {isLoadingResposta ? (
           <div
             className="w-full h-full col bg-cover bg-center"

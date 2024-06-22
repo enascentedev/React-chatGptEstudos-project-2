@@ -171,17 +171,18 @@ function Assunto() {
 			)}
 
 			{isLoadingAssuntos ? (
-				<div className="w-full h-full flex justify-center items-center" style={{ backgroundImage: "url('/loading.jpg')" }}>
-					<p className="text-white">Carregando assuntos...</p>
+				<div className="w-full h-full flex flex-col gap-5 justify-center items-center bg-center bg-cover" style={{ backgroundImage: "url('/loading.jpg')" }}>
+					<p className="text-white text-xl text font-bold bg-black p-2">Carregando assuntos...</p>
+					
 				</div>
 			) : (
 				<table className="border-collapse border border-gray-400 w-full bg-black text-white">
 					<thead>
 						<tr className='h-16'>
-							<th className="w-14 text-center border border-gray-400">Id</th>
+							<th className="md:w-10 w-40   text-center border border-gray-400">Id</th>
 							<th className="px-10 text-start border border-gray-400">Nome</th>
 							<th className="px-10 text-start border border-gray-400">Matéria</th>
-							<th className="w-40 border border-gray-400">Ação</th>
+							<th className="md:w-10 w-40  border border-gray-400">Ação</th>
 						</tr>
 					</thead>
 					<tbody>
