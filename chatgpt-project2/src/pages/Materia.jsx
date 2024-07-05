@@ -113,7 +113,7 @@ function Materia() {
 				<input
 					type="text"
 					placeholder="Digite para pesquisar"
-					className="bg-black text-white input input-bordered w-full h-20"
+					className="bg-black text-white input input-bordered border-white w-full h-20"
 					value={termoPesquisa}
 					onChange={handleSearchChange}
 				/>
@@ -142,24 +142,24 @@ function Materia() {
 					<p className="text-white text-xl text font-bold bg-black p-2">Carregando matérias...</p>
 				</div>
 			) : (
-				<table className="border-collapse border bg-black text-white border-gray-400 w-full h-80 overflow-y-auto">
+				<table className="border-collapse border bg-black text-white border-white w-full h-80 overflow-y-auto">
 					<thead>
 						<tr className='h-16'>
-							<th className="w-14 text-center border border-gray-400">Id</th>
-							<th className="px-10 text-start border border-gray-400">Nome</th>
-							<th className="w-40 border border-gray-400">Ação</th>
+							<th className="w-14 text-center border border-white">Id</th>
+							<th className="px-10 text-start border border-white">Nome</th>
+							<th className="w-40 border border-white">Ação</th>
 						</tr>
 					</thead>
 					<tbody>
 						{materiasFiltradas.map((materia) => (
-							<tr key={materia.id} className="border-b border-gray-400 ">
-								<td className="text-center border border-gray-400">
+							<tr key={materia.id} className="border-b border-white ">
+								<td className="text-center border border-white">
 									<span>{materia.id}</span>
 								</td>
-								<td className="px-10 text-start border border-gray-400">
+								<td className="px-10 text-start border border-white">
 									<h4>{materia.nome}</h4>
 								</td>
-								<td className="text-center border border-gray-400 p-2 ">
+								<td className="text-center border border-white p-2 ">
 									<button className="btn btn-outline w-20 mx-2 text-white" onClick={() => abrirModal(materia)}>Editar</button>
 									<i className="fa-solid fa-trash-can cursor-pointer" onClick={() => handleDeleteMateria(materia.id)}></i>
 								</td>

@@ -23,7 +23,7 @@ function Header() {
 								className={({ isActive }) =>
 									isActive
 										? 'flex items-center bg-gray-800 px-3 py-[22px]'
-										: 'flex items-center px-3 py-[22px] rounded-md hover:bg-gray-700 transition-colors'
+										: 'flex items-center px-3 py-[22px] hover:bg-gray-700 transition-colors'
 								}
 							>
 								<i className="fa-solid fa-house"></i>
@@ -37,7 +37,7 @@ function Header() {
 								className={({ isActive }) =>
 									isActive
 										? 'flex items-center bg-gray-800 px-3 py-[22px]'
-										: 'flex items-center px-3 py-[22px] rounded-md hover:bg-gray-700 transition-colors'
+										: 'flex items-center px-3 py-[22px] hover:bg-gray-700 transition-colors'
 								}
 							>
 								<i className="fa-solid fa-book"></i>
@@ -51,7 +51,7 @@ function Header() {
 								className={({ isActive }) =>
 									isActive
 										? 'flex items-center bg-gray-800 px-3 py-[22px]'
-										: 'flex items-center px-3 py-[22px] rounded-md hover:bg-gray-700 transition-colors'
+										: 'flex items-center px-3 py-[22px] hover:bg-gray-700 transition-colors'
 								}
 							>
 								<i className="fa-solid fa-chalkboard"></i>
