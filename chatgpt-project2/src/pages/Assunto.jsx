@@ -169,18 +169,22 @@ function Assunto() {
 			)}
 
 			{isLoadingAssuntos ? (
-				<div className="w-full h-full flex flex-col gap-5 justify-center items-center bg-center bg-cover" style={{ backgroundImage: "url('/loading.jpg')" }}>
+				<div className="w-full h-full flex flex-col text-white gap-5 ">
+					<div>
+						<span class="loading loading-spinner loading-lg"></span>
+						<span class="loading loading-spinner loading-lg"></span>
+						<span class="loading loading-spinner loading-lg"></span>
+					</div>
 					<p className="text-white text-xl text font-bold bg-black p-2">Carregando assuntos...</p>
-
 				</div>
 			) : (
-				<table className="mb-10 border-collapse border border-white w-full bg-black text-white rounded-md overflow-hidden">
+				<table className="border-collapse border border-white w-full bg-black text-white rounded-md overflow-hidden">
 					<thead className="rounded-t-md bg-black text-white">
 						<tr className='h-16'>
-							<th className="w-14 md:px-10 px-2 text-center border border-white">Id</th>
-							<th className="md:w-40 w-20 md:px-10 px-2 text-start border border-white">Nome</th>
-							<th className="md:w-36 w-20 md:px-10 px-2 text-start border border-white">Matéria</th>
-							<th className="w-10 border border-white">Ação</th>
+							<th className="w-5 md:px-10 px-2 text-center border border-white">Id</th>
+							<th className="md:w-96 w-10 md:px-10 px-2 text-start border border-white">Assunto</th>
+							<th className="md:w-36 w-10 md:px-10 px-2 text-start border border-white">Matéria</th>
+							<th className="md:w-10 w-5 border border-white">Ação</th>
 						</tr>
 					</thead>
 					<tbody className="bg-black text-white">
@@ -197,7 +201,7 @@ function Assunto() {
 								</td>
 								<td className="text-center border border-white md:px-50 px-0">
 									<button className="text-white btn btn-outline w-284 min-h-5 h-8 m-2 bg-yellow-500" onClick={() => abrirModal(assunto)}>Editar <i class="fa-solid fa-pen-to-square"></i></button>
-									<button className="text-white btn btn-outline w-24 min-h-5 h-8 m-2 bg-red-500"onClick={() => handleDeleteAssunto(assunto.id)}>Excluir<i className="fa-solid fa-trash-can cursor-pointer" ></i></button>
+									<button className="text-white btn btn-outline w-24 min-h-5 h-8 m-2 bg-red-500" onClick={() => handleDeleteAssunto(assunto.id)}>Excluir<i className="fa-solid fa-trash-can cursor-pointer" ></i></button>
 								</td>
 							</tr>
 						))}

@@ -153,11 +153,15 @@ function Home() {
       </div>
       <div className="flex items-center gap-2 h-full ">
         {isLoadingResposta ? (
-          <div
-            className="w-full h-full col bg-cover bg-center"
-            style={{ backgroundImage: "url('/loading.jpg')" }}
-          >
-          </div>
+          <div className="w-full h-full flex flex-col text-white gap-5 ">
+					<div>
+						<span class="loading loading-spinner loading-lg"></span>
+						<span class="loading loading-spinner loading-lg"></span>
+						<span class="loading loading-spinner loading-lg"></span>
+						<span class="loading loading-spinner loading-lg"></span>
+					</div>
+					<p className="text-white text-xl text font-bold bg-black p-2">Carregando resposta...</p>
+				</div>
         ) : (
           <textarea
             className="input input-bordered h-full w-full p-5 bg-black text-white border-spacing-2 border-white"

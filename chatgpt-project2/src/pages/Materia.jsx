@@ -138,7 +138,13 @@ function Materia() {
 			)}
 
 			{isLoadingMaterias ? (
-				<div className="w-full h-full flex flex-col gap-5 justify-center items-center bg-center bg-cover" style={{ backgroundImage: "url('/loading.jpg')" }}>
+				<div className="w-full h-full flex flex-col text-white gap-5 ">
+					<div>
+						<span class="loading loading-spinner loading-lg"></span>
+						<span class="loading loading-spinner loading-lg"></span>
+						<span class="loading loading-spinner loading-lg"></span>
+						<span class="loading loading-spinner loading-lg"></span>
+					</div>
 					<p className="text-white text-xl text font-bold bg-black p-2">Carregando matérias...</p>
 				</div>
 			) : (
