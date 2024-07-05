@@ -179,7 +179,7 @@ function Assunto() {
 						<tr className='h-16'>
 							<th className="w-14 md:px-10 px-2 text-center border border-white">Id</th>
 							<th className="md:w-40 w-20 md:px-10 px-2 text-start border border-white">Nome</th>
-							<th className="md:w-40 w-20 md:px-10 px-2 text-start border border-white">Matéria</th>
+							<th className="md:w-36 w-20 md:px-10 px-2 text-start border border-white">Matéria</th>
 							<th className="w-10 border border-white">Ação</th>
 						</tr>
 					</thead>
@@ -196,8 +196,8 @@ function Assunto() {
 									<h4>{materias.find((m) => m.id === assunto.materia.id)?.nome}</h4>
 								</td>
 								<td className="text-center border border-white md:px-50 px-0">
-									<button className="text-white btn btn-outline w-20 min-h-5 h-8 m-2" onClick={() => abrirModal(assunto)}>Editar</button>
-									<i className="fa-solid fa-trash-can cursor-pointer" onClick={() => handleDeleteAssunto(assunto.id)}></i>
+									<button className="text-white btn btn-outline w-284 min-h-5 h-8 m-2 bg-yellow-500" onClick={() => abrirModal(assunto)}>Editar <i class="fa-solid fa-pen-to-square"></i></button>
+									<button className="text-white btn btn-outline w-24 min-h-5 h-8 m-2 bg-red-500"onClick={() => handleDeleteAssunto(assunto.id)}>Excluir<i className="fa-solid fa-trash-can cursor-pointer" ></i></button>
 								</td>
 							</tr>
 						))}

@@ -147,7 +147,7 @@ function Materia() {
 						<tr className='h-16'>
 							<th className="w-14 text-center border border-white">Id</th>
 							<th className="px-10 text-start border border-white">Nome</th>
-							<th className="w-40 border border-white">Ação</th>
+							<th className="w-72 border border-white">Ação</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -160,8 +160,8 @@ function Materia() {
 									<h4>{materia.nome}</h4>
 								</td>
 								<td className="text-center border border-white p-2 ">
-									<button className="btn btn-outline w-20 mx-2 text-white" onClick={() => abrirModal(materia)}>Editar</button>
-									<i className="fa-solid fa-trash-can cursor-pointer" onClick={() => handleDeleteMateria(materia.id)}></i>
+									<button className="btn btn-outline w-24 m-2 text-white bg-yellow-500" onClick={() => abrirModal(materia)}>Editar <i class="fa-solid fa-pen-to-square"></i></button>
+									<button className="btn btn-outline w-24 mx-2 text-white bg-red-500" onClick={() => handleDeleteMateria(materia.id)}>Excluir <i className="fa-solid fa-trash-can cursor-pointer" ></i> </button>
 								</td>
 							</tr>
 						))}

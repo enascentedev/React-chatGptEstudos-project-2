@@ -118,12 +118,12 @@ function Home() {
           )}
         </select>
       </div>
-      <div className="flex justify-start items-center gap-2">
+      <div className="flex-row justify-start items-center gap-10 sm:flex-col">
         <select
           className="select select-bordered select-lg w-full max-w-xs bg-black text-white border-white"
           value={assuntoSelecionado}
           onChange={(e) => setAssuntoSelecionado(e.target.value)}
-          disabled={isLoadingAssuntos || isLoadingResposta}
+          disabled={isLoadingAssuntos || isLoadingResposta || isLoadingMaterias}
         >
           <option disabled value="">
             Selecione um assunto
@@ -144,7 +144,7 @@ function Home() {
           )}
         </select>
         <button
-          className="btn w-40 h-16 text-base bg-black text-white"
+          className="btn sm:w-40 w-full h-16 text-base bg-black text-white sm:mx-5 max-w-xs sm:my-0 my-10"
           onClick={gerarResposta}
           disabled={isLoadingResposta}
         >
