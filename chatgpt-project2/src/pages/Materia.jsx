@@ -8,13 +8,19 @@ function Materia() {
 	const [termoPesquisa, setTermoPesquisa] = useState('');
 	const [isLoadingMaterias, setIsLoadingMaterias] = useState(false);
 
+	// Estados para paginação
+	const [currentPage, setCurrentPage] = useState(0);
+	const [pageSize] = useState(5);
+	const [totalPages, setTotalPages] = useState(0);
+
 	useEffect(() => {
 		const fetchMaterias = async () => {
 			setIsLoadingMaterias(true);
 			try {
-				const response = await fetch('https://java-gpt2.onrender.com/materias');
+				const response = await fetch(`https://java-gpt2.onrender.com/materias/page?page=${currentPage}&size=${pageSize}`);
 				const data = await response.json();
-				setMaterias(data);
+				setMaterias(data.content);
+				setTotalPages(data.totalPages);
 			} catch (error) {
 				console.error('Erro ao carregar matérias:', error);
 			} finally {
@@ -23,7 +29,7 @@ function Materia() {
 		};
 
 		fetchMaterias();
-	}, []);
+	}, [currentPage, pageSize]);
 
 	const handleSaveMateria = async (e) => {
 		e.preventDefault();
@@ -103,12 +109,16 @@ function Materia() {
 		setTermoPesquisa(e.target.value.toLowerCase());
 	};
 
+	const handlePageChange = (newPage) => {
+		setCurrentPage(newPage);
+	};
+
 	const materiasFiltradas = materias.filter(
 		(materia) => materia.nome.toLowerCase().includes(termoPesquisa)
 	);
 
 	return (
-		<div className="h-screen flex flex-col gap-8 p-10 bg-cover bg-center">
+		<div className="h-screen flex flex-col gap-5 p-10 bg-cover bg-center">
 			<div className='flex justify-between gap-2'>
 				<input
 					type="text"
@@ -140,39 +150,53 @@ function Materia() {
 			{isLoadingMaterias ? (
 				<div className="w-full h-full flex flex-col text-white gap-5 ">
 					<div>
-						<span class="loading loading-spinner loading-lg"></span>
-						<span class="loading loading-spinner loading-lg"></span>
-						<span class="loading loading-spinner loading-lg"></span>
-						<span class="loading loading-spinner loading-lg"></span>
+						<span className="loading loading-spinner loading-lg"></span>
+						<span className="loading loading-spinner loading-lg"></span>
+						<span className="loading loading-spinner loading-lg"></span>
+						<span className="loading loading-spinner loading-lg"></span>
 					</div>
 					<p className="text-white text-xl text font-bold bg-black p-2">Carregando matérias...</p>
 				</div>
 			) : (
-				<table className="border-collapse border bg-black text-white border-white w-full h-80 overflow-y-auto">
-					<thead>
-						<tr className='h-16'>
-							<th className="w-14 text-center border border-white">Id</th>
-							<th className="px-10 text-start border border-white">Nome</th>
-							<th className="w-72 border border-white">Ação</th>
-						</tr>
-					</thead>
-					<tbody>
-						{materiasFiltradas.map((materia) => (
-							<tr key={materia.id} className="border-b border-white ">
-								<td className="text-center border border-white">
-									<span>{materia.id}</span>
-								</td>
-								<td className="px-10 text-start border border-white">
-									<h4>{materia.nome}</h4>
-								</td>
-								<td className="text-center border border-white p-2 ">
-									<button className="btn btn-outline w-24 m-2 text-white bg-yellow-500" onClick={() => abrirModal(materia)}>Editar <i class="fa-solid fa-pen-to-square"></i></button>
-									<button className="btn btn-outline w-24 mx-2 text-white bg-red-500" onClick={() => handleDeleteMateria(materia.id)}>Excluir <i className="fa-solid fa-trash-can cursor-pointer" ></i> </button>
-								</td>
+				<>
+					<table className="border-collapse border border-white w-full bg-black text-white rounded-md overflow-hidden">
+						<thead>
+							<tr className='h-16'>
+								<th className="w-14 text-center border border-white">Id</th>
+								<th className="px-10 text-start border border-white">Nome</th>
+								<th className="w-72 border border-white">Ação</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{materiasFiltradas.map((materia) => (
+								<tr key={materia.id} className="border-b border-white ">
+									<td className="text-center border border-white">
+										<span>{materia.id}</span>
+									</td>
+									<td className="px-10 text-start border border-white">
+										<h4>{materia.nome}</h4>
+									</td>
+									<td className="text-center border border-white ">
+										<button className="text-white btn btn-outline w-24 sm:min-h-5 sm:h-8 min-h-5 h-6  bg-yellow-500" onClick={() => abrirModal(materia)}>Editar <i className="fa-solid fa-pen-to-square"></i></button>
+										<button className="text-white btn btn-outline w-24 sm:min-h-5 sm:h-8 min-h-5 h-6 m-2 bg-red-500" onClick={() => handleDeleteMateria(materia.id)}>Excluir <i className="fa-solid fa-trash-can cursor-pointer" ></i> </button>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+
+					<div className="flex justify-end">
+						<div className="join">
+							{Array.from({ length: totalPages }, (_, index) => (
+								<button key={index} className={`join-item btn ${index === currentPage ? 'btn-active' : ''}`}
+									onClick={() => handlePageChange(index)}
+								>
+									{index + 1}
+								</button>
+							))}
+						</div>
+					</div>
+				</>
 			)}
 		</div>
 	);

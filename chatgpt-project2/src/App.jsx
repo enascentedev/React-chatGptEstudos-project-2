@@ -10,7 +10,7 @@ import "./assets/main.css";
 function App() {
   return (
     <Router>
-      <div className="h-screen overflow-y-auto flex flex-col bg-cover bg-center" style={{ backgroundImage: "url('/fundo.jpg')" }}>
+      <div className="h-screen sm:overflow-y-hidden overflow-y-auto flex flex-col bg-cover bg-center" style={{ backgroundImage: "url('/fundo.jpg')" }}>
         <Header />
         <div className="flex-grow">
           <Routes>

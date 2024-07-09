@@ -8,12 +8,15 @@ function Assunto() {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [assuntoEmEdicao, setAssuntoEmEdicao] = useState(null);
 	const [termoPesquisa, setTermoPesquisa] = useState('');
-
 	const [isLoadingAssuntos, setIsLoadingAssuntos] = useState(false);
+
+	// Estados para paginação
+	const [currentPage, setCurrentPage] = useState(0);
+	const [pageSize] = useState(5);
+	const [totalPages, setTotalPages] = useState(0);
 
 	useEffect(() => {
 		const fetchMaterias = async () => {
-
 			try {
 				const response = await fetch('https://java-gpt2.onrender.com/materias');
 				const data = await response.json();
@@ -26,9 +29,10 @@ function Assunto() {
 		const fetchAssuntos = async () => {
 			setIsLoadingAssuntos(true);
 			try {
-				const response = await fetch('https://java-gpt2.onrender.com/assuntos');
+				const response = await fetch(`https://java-gpt2.onrender.com/assuntos/page?page=${currentPage}&size=${pageSize}`);
 				const data = await response.json();
-				setAssuntos(data);
+				setAssuntos(data.content);
+				setTotalPages(data.totalPages);
 			} catch (error) {
 				console.error('Erro ao carregar assuntos:', error);
 			} finally {
@@ -38,7 +42,7 @@ function Assunto() {
 
 		fetchMaterias();
 		fetchAssuntos();
-	}, []);
+	}, [currentPage, pageSize]);
 
 	const handleSaveAssunto = async (e) => {
 		e.preventDefault();
@@ -122,6 +126,10 @@ function Assunto() {
 		setTermoPesquisa(e.target.value.toLowerCase());
 	};
 
+	const handlePageChange = (newPage) => {
+		setCurrentPage(newPage);
+	};
+
 	const assuntosFiltrados = assuntos.filter(
 		(assunto) =>
 			assunto.nome.toLowerCase().includes(termoPesquisa) ||
@@ -129,7 +137,7 @@ function Assunto() {
 	);
 
 	return (
-		<div className="h-screen flex flex-col gap-8 md:p-10 p-5 bg-cover bg-center">
+		<div className="h-screen flex flex-col gap-5 md:p-10 p-5 bg-cover bg-center">
 			<div className='flex justify-between gap-2'>
 				<input
 					type="text"
@@ -171,44 +179,54 @@ function Assunto() {
 			{isLoadingAssuntos ? (
 				<div className="w-full h-full flex flex-col text-white gap-5 ">
 					<div>
-						<span class="loading loading-spinner loading-lg"></span>
-						<span class="loading loading-spinner loading-lg"></span>
-						<span class="loading loading-spinner loading-lg"></span>
+						<span className="loading loading-spinner loading-lg"></span>
+						<span className="loading loading-spinner loading-lg"></span>
+						<span className="loading loading-spinner loading-lg"></span>
 					</div>
 					<p className="text-white text-xl text font-bold bg-black p-2">Carregando assuntos...</p>
 				</div>
 			) : (
-				<table className="border-collapse border border-white w-full bg-black text-white rounded-md overflow-hidden">
-					<thead className="rounded-t-md bg-black text-white">
-						<tr className='h-16'>
-							<th className="w-5 md:px-10 px-2 text-center border border-white">Id</th>
-							<th className="md:w-96 w-10 md:px-10 px-2 text-start border border-white">Assunto</th>
-							<th className="md:w-36 w-10 md:px-10 px-2 text-start border border-white">Matéria</th>
-							<th className="md:w-10 w-5 border border-white">Ação</th>
-						</tr>
-					</thead>
-					<tbody className="bg-black text-white">
-						{assuntosFiltrados.map((assunto, index) => (
-							<tr key={assunto.id} className={`border-b border-white ${index === assuntosFiltrados.length - 1 ? 'rounded-b-md' : ''}`}>
-								<td className="md:px-10 px-4 text-center border border-white">
-									<span>{assunto.id}</span>
-								</td>
-								<td className="md:px-10 px-4 text-start border border-white">
-									<h4>{assunto.nome}</h4>
-								</td>
-								<td className="md:px-10 px-4 text-start border border-white">
-									<h4>{materias.find((m) => m.id === assunto.materia.id)?.nome}</h4>
-								</td>
-								<td className="text-center border border-white md:px-50 px-0">
-									<button className="text-white btn btn-outline w-284 min-h-5 h-8 m-2 bg-yellow-500" onClick={() => abrirModal(assunto)}>Editar <i class="fa-solid fa-pen-to-square"></i></button>
-									<button className="text-white btn btn-outline w-24 min-h-5 h-8 m-2 bg-red-500" onClick={() => handleDeleteAssunto(assunto.id)}>Excluir<i className="fa-solid fa-trash-can cursor-pointer" ></i></button>
-								</td>
+				<>
+					<table className="border-collapse border border-white w-full bg-black text-white rounded-md overflow-hidden">
+						<thead className="rounded-t-md bg-black text-white">
+							<tr className='h-16'>
+								<th className="w-5 md:px-10 px-2 text-center border border-white">Id</th>
+								<th className="md:w-80 w-10 md:px-10 px-2 text-start border border-white">Assunto</th>
+								<th className="md:w-10 w-5 md:px-10 px-2 text-start border border-white">Matéria</th>
+								<th className="md:w-10 w-5 border border-white">Ação</th>
 							</tr>
+						</thead>
+						<tbody className="bg-black text-white">
+							{assuntosFiltrados.map((assunto, index) => (
+								<tr key={assunto.id} className={`border-b border-white ${index === assuntosFiltrados.length - 1 ? 'rounded-b-md' : ''}`}>
+									<td className="md:px-10 px-4 text-center border border-white">
+										<span>{assunto.id}</span>
+									</td>
+									<td className="md:px-10 px-4 text-start border border-white">
+										<h4>{assunto.nome}</h4>
+									</td>
+									<td className="md:px-10 px-4 text-start border border-white">
+										<h4>{materias.find((m) => m.id === assunto.materia.id)?.nome}</h4>
+									</td>
+									<td className="text-center border border-white md:px-50 px-0">
+										<button className="text-white btn btn-outline w-24 sm:min-h-5 sm:h-8 min-h-5 h-6 m-2 bg-yellow-500" onClick={() => abrirModal(assunto)}>Editar <i className="fa-solid fa-pen-to-square"></i></button>
+										<button className="text-white btn btn-outline w-24 sm:min-h-5 sm:h-8 min-h-5 h-6 m-2 bg-red-500" onClick={() => handleDeleteAssunto(assunto.id)}>Excluir<i className="fa-solid fa-trash-can cursor-pointer" ></i></button>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+
+					<div className="flex justify-end gap-1 pb-4">
+						{Array.from({ length: totalPages }, (_, index) => (
+							<button key={index} className={`join-item btn ${index === currentPage ? 'btn-active' : ''}`}
+								onClick={() => handlePageChange(index)}
+							>
+								{index + 1}
+							</button>
 						))}
-					</tbody>
-				</table>
-
-
+					</div>
+				</>
 			)}
 		</div>
 	);
