@@ -151,7 +151,7 @@ function Home() {
           Gerar
         </button>
       </div>
-      <div className="flex items-center gap-2 h-full ">
+      <div className="flex gap-2 h-full ">
         {isLoadingResposta ? (
           <div className="w-full h-full flex flex-col text-white gap-5 ">
 					<div>
@@ -164,7 +164,7 @@ function Home() {
 				</div>
         ) : (
           <textarea
-            className="input input-bordered h-full w-full p-5 bg-black text-white border-spacing-2 border-white"
+            className="input input-bordered h-72 w-full p-5 bg-black text-white border-spacing-2 border-white"
             value={resposta || "A resposta aparecerá aqui..."}
             onChange={(e) => setResposta(e.target.value)} // Atualiza o estado quando o usuário digita
           />
