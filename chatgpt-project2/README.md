@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-Este é um projeto full stack que utiliza React para o front-end e Java para o back-end (disponível em outro repositório). O projeto faz uso da API da OpenAI para gerar perguntas e respostas para os usuários de acordo com a linguagem de programação e assunto querem estudar e  com base nos dados do ChatGPT versão 4 gera as perguntas e respostas. Além disso, um designer moderno , utilizando Tailwind CSS e DaisyUI.
+Este é um projeto full stack que utiliza React para o front-end e Java para o back-end (disponível em outro repositório). O projeto faz uso da API da OpenAI para gerar perguntas e respostas para os usuários de acordo com a linguagem de programação e assunto querem estudar e  com base nos dados do ChatGPT versão 4 gera as perguntas e respostas. Além disso, um designer moderno , utilizando Tailwind CSS e DaisyUI. No back-end temos um crud ,páginação e testes unitários.
 
 ## Vídeo Demonstrativo
 
