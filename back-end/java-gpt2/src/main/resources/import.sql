@@ -1,0 +1,23 @@
+INSERT INTO tb_materia (nome) VALUES ('Java');
+INSERT INTO tb_materia (nome) VALUES ('JavaScript');
+INSERT INTO tb_materia (nome) VALUES ('TypeScript');
+INSERT INTO tb_materia (nome) VALUES ('C#');
+INSERT INTO tb_materia (nome) VALUES ('C++');
+INSERT INTO tb_materia (nome) VALUES ('PHP');
+INSERT INTO tb_materia (nome) VALUES ('Go');
+INSERT INTO tb_materia (nome) VALUES ('Ruby');
+
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Tipos primitivos', 1);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Orientação a objeto', 1);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('DOM', 2);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Função', 2);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Variáveis', 3);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Classes', 3);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Estrutura de repetição FOR', 4);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Herança', 4);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Memória', 5);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Compilador', 5);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Conexão com banco de dados', 6);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Impressão de dados', 6);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Tipos de dados', 7);
+INSERT INTO tb_assunto (nome, materia_id) VALUES ('Variáveis', 7);
