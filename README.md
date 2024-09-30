@@ -7,7 +7,7 @@ Este é um projeto full stack que utiliza React para o front-end e Java para o b
 ## Vídeo Demonstrativo
 
 <div align="center">
-  <img src="./public/chatGpt-2.gif" alt="Demonstração do Projeto" width="600">
+  <img src="/chatgpt-project2/public/chatGpt-2.gif" alt="Demonstração do Projeto" width="600">
 </div>
 
 ## Funcionalidades
