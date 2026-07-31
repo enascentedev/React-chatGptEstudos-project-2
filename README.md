@@ -1,86 +1,111 @@
-# Projeto Full Stack em React e Java
+# Chat Estudos — gerador de perguntas com IA (React + Java)
 
-## Visão Geral
+> **Projeto legado (2024).** Mantido como registro de portfólio, sem manutenção ativa. Front-end em Create React App (descontinuado) e back-end em Spring Boot — a arquitetura **não deve ser usada como referência atual**.
 
-Este é um projeto full stack que utiliza React para o front-end e Java para o back-end (disponível em outro repositório). O projeto faz uso da API da OpenAI para gerar perguntas e respostas para os usuários de acordo com a linguagem de programação e assunto querem estudar e  com base nos dados do ChatGPT versão 4 gera as perguntas e respostas. Além disso, um designer moderno , utilizando Tailwind CSS e DaisyUI. No back-end temos um crud ,páginação e testes unitários.
+Aplicação full-stack que gera perguntas e respostas de estudo por matéria e assunto, usando a API da OpenAI. O usuário escolhe a matéria e o assunto; o back-end monta o prompt, chama o provedor de IA e devolve o conteúdo gerado.
 
-## Vídeo Demonstrativo
+**Este repositório contém as duas pontas:**
+
+```text
+chatgpt-project2/        → front-end React (Create React App, Tailwind, DaisyUI)
+back-end/java-gpt2/      → API REST em Java 17 + Spring Boot
+```
+
+## Vídeo demonstrativo
 
 <div align="center">
-  <img src="/chatgpt-project2/public/chatGpt-2.gif" alt="Demonstração do Projeto" width="600">
+  <img src="./chatgpt-project2/public/chatGpt-2.gif" alt="Demonstração do projeto" width="600">
 </div>
 
-## Funcionalidades
+## Deploy público desativado
 
-- **Integração com OpenAI**: Responde às perguntas dos usuários utilizando a API da OpenAI, baseada na versão 4 do ChatGPT.
-- **Seletor de Temas**: Permite a troca completa do design da aplicação com um único clique, graças ao Tailwind CSS e DaisyUI.
-- **Componentes Reutilizáveis**: Implementação de componentes reutilizáveis para facilitar a manutenção e a escalabilidade do projeto.
+O projeto publicado no Netlify foi desativado e não está mais disponível
+publicamente. O antigo back-end do Render também está fora do ar e não deve ser
+usado. Além disso, o `netlify.toml` bloqueia novos builds e deploys. Para ver o
+sistema funcionando, rode as duas pontas localmente conforme as instruções
+abaixo.
 
-## Tecnologias Utilizadas
+## Onde fica a chave da OpenAI
 
-### Front-end
+A chave é lida **exclusivamente pelo back-end**, a partir da variável de ambiente `CHAT_GPT_API_KEY` (`ChatGPTService.java`). O front-end nunca vê a chave: ele só conversa com a API Java.
 
-- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
-- **Tailwind CSS**: Framework CSS utilitário para estilização rápida e eficiente.
-- **DaisyUI**: Biblioteca de componentes para Tailwind CSS que facilita a criação de interfaces modernas e responsivas.
+```text
+Navegador  →  API Java/Spring (lê CHAT_GPT_API_KEY)  →  API da OpenAI
+```
+
+**Chaves de provedores de IA não devem ficar no front-end.** Tudo que entra no bundle do navegador é público — em Create React App, qualquer variável `REACT_APP_*` é embutida no JavaScript entregue ao usuário e pode ser extraída por qualquer visitante. Por isso o front-end deste projeto **não usa `.env` nem requer chave para rodar**.
+
+> Versões antigas deste projeto (abril/2024) chamavam a OpenAI diretamente do navegador com a chave embutida no bundle. Essa abordagem foi abandonada em favor do back-end Java. Se você reaproveitar código desse período, não repita o padrão.
+
+## Estado atual
+
+| Funcionalidade | Estado | Evidência |
+|---|---|---|
+| CRUD de matérias e assuntos | Implementado | `back-end/.../controllers/MateriaController.java`, `AssuntoController.java` |
+| Paginação | Implementado | `MateriaController` — `Pageable` |
+| Geração de perguntas por IA | Implementado | `back-end/.../services/ChatGPTService.java` |
+| Testes unitários do back-end | Implementado | `back-end/java-gpt2/src/test/` — services, controllers e repositories |
+| Front-end com rotas e listagens | Implementado | `chatgpt-project2/src/pages/` |
+| Banco de dados | Parcial | H2 **em memória**: os dados somem ao reiniciar a aplicação |
+| Seletor de temas | Planejado | DaisyUI está instalado, mas não há troca de tema na interface |
+| Testes do front-end | Planejado | dependências presentes, nenhum teste escrito |
+| Deploy funcional | Planejado | back-end fora do ar; ver a seção de demonstração |
+
+**Legenda** — *Implementado*: funciona ponta a ponta. *Parcial*: funciona com limitações declaradas. *Planejado*: não implementado.
+
+## Modelo de IA utilizado
+
+`gpt-3.5-turbo`, definido em `ChatGPTService.java`. Versões anteriores deste README mencionavam GPT-4 — o código nunca usou essa versão.
+
+## Tecnologias
+
+**Front-end:** React 18 (Create React App), React Router 6, Tailwind CSS 3, DaisyUI
+**Back-end:** Java 17, Spring Boot, Spring Data JPA, H2 (em memória), ModelMapper, biblioteca `openai-java` (`com.theokanning`)
+
+## Como rodar
 
 ### Back-end
 
-- **Java**: Linguagem de programação utilizada para o desenvolvimento do servidor back-end (repositório disponível separadamente).
-- **Spring Boot**: Framework para construção de aplicações Java robustas e de alta performance.
+Pré-requisitos: JDK 17 e uma chave de API da OpenAI.
 
-## Instalação e Configuração
+```bash
+cd back-end/java-gpt2
 
-### Pré-requisitos
+# Defina a chave no ambiente do servidor (nunca no código nem no front-end)
+export CHAT_GPT_API_KEY="ADICIONE_SUA_CHAVE_AQUI"     # Windows PowerShell: $env:CHAT_GPT_API_KEY="ADICIONE_SUA_CHAVE_AQUI"
 
-- Node.js e npm instalados
-- Conta na OpenAI e chave de API válida
-- Back-end configurado e rodando (ver repositório do back-end)
+./mvnw spring-boot:run
+```
 
-### Passos para Instalação
+A API sobe em `http://localhost:8080`.
 
-1. Clone o repositório do front-end:
-    ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
-    ```
+### Front-end
 
-2. Navegue até o diretório do projeto:
-    ```bash
-    cd seu-repositorio
-    ```
+```bash
+cd chatgpt-project2
+npm install
+npm start
+```
 
-3. Instale as dependências:
-    ```bash
-    npm install
-    ```
+A interface abre em `http://localhost:3000`. As URLs da API estão fixas no código apontando para o serviço do Render (fora do ar) — para uso local, ajuste-as em `src/pages/` para `http://localhost:8080`.
 
-4. Configure as variáveis de ambiente:
-    Crie um arquivo `.env` na raiz do projeto e adicione sua chave de API da OpenAI:
-    ```
-    REACT_APP_OPENAI_API_KEY=your-api-key
-    ```
+## Segurança e configuração
 
-5. Inicie a aplicação:
-    ```bash
-    npm start
-    ```
+- **Console H2 exposto:** `application-test.properties` habilita o console do banco com `spring.h2.console.settings.web-allow-others=true`, e o perfil padrão é `test` (`spring.profiles.active=${APP_PROFILE:test}`). Ao publicar em qualquer ambiente acessível pela rede, **defina `APP_PROFILE` explicitamente** e desabilite o console — caso contrário o banco fica navegável por terceiros.
+- **Banco em memória:** a configuração `test` usa H2 em memória, sem persistência entre execuções.
+- Não há arquivo `.env` neste repositório, e nenhum é necessário.
 
-## Uso
+## Limitações conhecidas
 
-Após iniciar a aplicação, você poderá acessar a interface do usuário no seu navegador. Utilize o seletor de temas para mudar o design da aplicação e faça perguntas que serão respondidas utilizando a API da OpenAI.
-
-## Contribuição
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests. 
+- URLs do back-end fixas no código do front-end, sem configuração por ambiente.
+- Sem persistência real de dados (H2 em memória).
+- Sem testes no front-end.
+- Deploy do back-end indisponível.
 
 ## Licença
 
-Este projeto está licenciado sob a MIT License. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+MIT — veja o arquivo [LICENSE](LICENSE).
 
 ## Contato
 
-Para mais informações, entre em contato através do email [emanuelnascente@gmail.com](mailto:emanuelnascente@gmail.com).
-
----
-
-**Nota**: Certifique-se de incluir o link correto para o repositório do back-end na seção de instalação e configuração.
+Emanuel Nascente — [emanuelnascente@gmail.com](mailto:emanuelnascente@gmail.com)
