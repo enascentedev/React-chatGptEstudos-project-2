@@ -1,3 +1,9 @@
+[build]
+  # Deploy desativado intencionalmente: codigo 0 cancela builds automaticos.
+  ignore = "exit 0"
+  # Salvaguarda para builds manuais ou acionados por build hooks.
+  command = "false"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

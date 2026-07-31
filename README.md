@@ -17,9 +17,13 @@ back-end/java-gpt2/      → API REST em Java 17 + Spring Boot
   <img src="./chatgpt-project2/public/chatGpt-2.gif" alt="Demonstração do projeto" width="600">
 </div>
 
-## Demonstração online — atenção
+## Deploy público desativado
 
-O front-end continua publicado em [chat-estudos.netlify.app](https://chat-estudos.netlify.app/), mas **o back-end hospedado no Render está fora do ar**. A página carrega, e as chamadas à API falham. Para ver o sistema funcionando é preciso rodar as duas pontas localmente, conforme as instruções abaixo.
+O projeto publicado no Netlify foi desativado e não está mais disponível
+publicamente. O antigo back-end do Render também está fora do ar e não deve ser
+usado. Além disso, o `netlify.toml` bloqueia novos builds e deploys. Para ver o
+sistema funcionando, rode as duas pontas localmente conforme as instruções
+abaixo.
 
 ## Onde fica a chave da OpenAI
 
@@ -68,7 +72,7 @@ Pré-requisitos: JDK 17 e uma chave de API da OpenAI.
 cd back-end/java-gpt2
 
 # Defina a chave no ambiente do servidor (nunca no código nem no front-end)
-export CHAT_GPT_API_KEY="sua-chave-aqui"     # Windows PowerShell: $env:CHAT_GPT_API_KEY="sua-chave-aqui"
+export CHAT_GPT_API_KEY="ADICIONE_SUA_CHAVE_AQUI"     # Windows PowerShell: $env:CHAT_GPT_API_KEY="ADICIONE_SUA_CHAVE_AQUI"
 
 ./mvnw spring-boot:run
 ```
