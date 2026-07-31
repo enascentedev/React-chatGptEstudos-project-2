@@ -16,16 +16,16 @@ import com.theokanning.openai.service.OpenAiService;
 
 @Service
 public class ChatGPTService {
+	private static final String API_KEY_ENV_VAR = "CHAT_GPT_API_KEY";
+	private static final String API_KEY_PLACEHOLDER = "ADICIONE_SUA_CHAVE_AQUI";
+	private static final String MODEL = "gpt-3.5-turbo";
+	private static final String ROLE = "user";
 
 	@Autowired
 	private AssuntoService assuntoService;
 
 	@Autowired
 	private ModelMapper modelMapper;
-
-	private static final String API_KEY = System.getenv("CHAT_GPT_API_KEY");;
-	private static final String MODEL = "gpt-3.5-turbo";
-	private static final String ROLE = "user";
 	
 	public RespostaDTO criarPerguntaPorAssunto(Long idAssunto) {
 		AssuntoDTO assuntoDTO = assuntoService.findById(idAssunto);
@@ -46,7 +46,7 @@ public class ChatGPTService {
 	}
 
 	private List<ChatCompletionChoice> apiChatGPT(String pergunta) {
-		OpenAiService service = new OpenAiService(API_KEY);
+		OpenAiService service = new OpenAiService(obterApiKey());
 
 		ChatMessage chat = new ChatMessage(ROLE, pergunta);
 
@@ -58,5 +58,18 @@ public class ChatGPTService {
 				.build();
 
 		return service.createChatCompletion(request).getChoices();
+	}
+
+	private String obterApiKey() {
+		String apiKey = System.getenv(API_KEY_ENV_VAR);
+
+		if (apiKey == null || apiKey.isBlank() || API_KEY_PLACEHOLDER.equals(apiKey)) {
+			throw new IllegalStateException(
+					"Defina a variavel de ambiente " + API_KEY_ENV_VAR
+							+ " no servidor. Use o arquivo .env.example apenas como modelo."
+			);
+		}
+
+		return apiKey;
 	}
 }
